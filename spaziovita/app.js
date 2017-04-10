@@ -4,35 +4,26 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var request = require('request');
-var Trello = require("node-trello");
-var t = new Trello("9df4c4b9e3513069f2d5187139b8c207", "0d7ee3d7062cc82e938e7456f37a40d055632c059e0edcbacc6cd7b5fb07905d");
+
+var index = require('./routes/index');
+var users = require('./routes/users');
 
 var app = express();
+
+// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/corsi/:name/', function(req, res, next) {  
-	// cicla sulla lista dei corsi 
-	t.get("/1/lists/58eb869c344a7f4f5cbe61fd/cards", function(err, corsi) {
-	  if (err) throw err;
-
-	  for (var i = 0; i < corsi.length; i++) {
-	  	if(corsi[i].name == req.params.name)
-			res.render('corso', {corso : corsi[i]});
-		else{
-			var err = new Error('Not Found');
-			err.status = 404;
-			next(err);
-		}
-	  };
-	});
-});
+app.use('/', index);
+app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -40,7 +31,6 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -54,11 +44,3 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-
-
-var port = process.env.PORT || 8888;
-app.listen(port, null, function (err) {
-  console.log('Gatekeeper, at your service: http://localhost:' + port);
-});
-
-
