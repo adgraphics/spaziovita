@@ -6026,6 +6026,9 @@ h2::after {
   height: 10px;
   border-bottom: 2px solid #00baf1; }
 
+.card {
+  box-shadow: 0px 0px 2px #999; }
+
 .card-info {
   background-color: white;
   border: 0px; }
