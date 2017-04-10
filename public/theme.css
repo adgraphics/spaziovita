@@ -6026,7 +6026,7 @@ h2::after {
   height: 10px;
   border-bottom: 2px solid #00baf1; }
 
-.card p::after {
+.card .card-block:last-child::after {
   content: ' ';
   display: block;
   width: 80px;
