@@ -13,7 +13,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var request = require('request');
 var Trello = require("node-trello");
-var t = new Trello("9df4c4b9e3513069f2d5187139b8c207", "0d7ee3d7062cc82e938e7456f37a40d055632c059e0edcbacc6cd7b5fb07905d");
 
 var app = express();
 app.set('views', path.join(__dirname, 'views'));
