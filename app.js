@@ -1,3 +1,10 @@
+
+/********
+*********  TRELLO BOARD CONTENUTI 
+*********  https://trello.com/b/iV7i6Ruc/sito
+*********/
+
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -16,6 +23,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.get('/corsi/:name/', function(req, res, next) {  
 	// cicla sulla lista dei corsi 
