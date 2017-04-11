@@ -13,33 +13,63 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var request = require('request');
 var Trello = require("node-trello");
+var ejs = require('ejs');
+
+
+
+if(!process.env.NODE_ENV) // DEV
+	process.env = require('./env.json')['development'];
+
+var t = new Trello(process.env.TRELLO_API_KEY, process.env.TRELLO_API_TOKEN);
 
 var app = express();
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+
+// set up ejs engine
+app.set('views', path.join(__dirname, 'public'));
+app.engine('html', ejs.renderFile);
+app.set('view engine', 'html');
+
+
+
+
+
+var loadModel = function() {
+	return new Promise(function(resolve, reject) {
+		t.get("/1/lists/58eb869c344a7f4f5cbe61fd/cards", function(err, corsi) {
+			if (err) {
+				reject();
+				return;
+			}
+			var model = {
+				corsi : corsi
+			};
+			resolve(model);
+
+	  	});
+	});
+}
+	
+var model;
+loadModel().then(function(data) {
+	model = data;
+});
+
+
+
+
+
+app.get('/:page', function(req, res, next) {  
+	console.log(model);
+	if (req.params.page.endsWith(".html"))
+		res.render(req.params.page, model);
+	else
+		next();
+});
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.get('/corsi/:name/', function(req, res, next) {  
-	// cicla sulla lista dei corsi 
-	t.get("/1/lists/58eb869c344a7f4f5cbe61fd/cards", function(err, corsi) {
-	  if (err) throw err;
-
-	  for (var i = 0; i < corsi.length; i++) {
-	  	if(corsi[i].name == req.params.name)
-			res.render('corso', {corso : corsi[i]});
-		else{
-			var err = new Error('Not Found');
-			err.status = 404;
-			next(err);
-		}
-	  };
-	});
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
