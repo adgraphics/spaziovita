@@ -6054,3 +6054,6 @@ h2::after {
   margin: auto;
   margin-top: 20px;
   border-bottom: 2px solid #00baf1; }
+
+#primopiano a {
+  color: white; }
