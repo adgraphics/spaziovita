@@ -6055,5 +6055,18 @@ h2::after {
   margin-top: 20px;
   border-bottom: 2px solid #00baf1; }
 
+.card-success {
+  background-color: white;
+  border: 0px; }
+
+.card-success .card-block:last-child::after {
+  content: ' ';
+  display: block;
+  width: 80px;
+  height: 10px;
+  margin: auto;
+  margin-top: 20px;
+  border-bottom: 2px solid #5cb85c; }
+
 #primopiano a {
   color: white; }
