@@ -198,6 +198,10 @@ h2::after  {
   background-color: white;
   border: 0px;
 }
+
+#primopiano {
+}
+
 .card-primary .card-block:last-child::after {
    content: ' ';
   display:block;
