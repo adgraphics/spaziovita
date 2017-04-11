@@ -3,13 +3,7 @@
 *********  TRELLO BOARD CONTENUTI 
 *********  https://trello.com/b/iV7i6Ruc/sito
 *********/
-<<<<<<< HEAD
-
-
-var express = require('express'); 
-=======
 var express = require('express');
->>>>>>> origin/master
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -32,37 +26,48 @@ app.engine('html', ejs.renderFile);
 app.set('view engine', 'html');
 
 
-<<<<<<< HEAD
-=======
 app.get('/update', function(req,res){
 	loadModel().then(function(data) {
 		res.send("BENE, HAI AGGIORNATO spaziovitaniguarda.it");
 	});
 });
 
->>>>>>> origin/master
+var model = {};
 var loadModel = function() {
-	return new Promise(function(resolve, reject) {
+	var corsi = new Promise(function(resolve, reject) {
 		t.get("/1/lists/58eb869c344a7f4f5cbe61fd/cards", { attachments: true }, function(err, corsi) {
 			if (err) {
 				reject();
 				return;
 			}
-			var model = {
-				corsi : corsi
-			};
-
-			console.log("corsi" , JSON.stringify(corsi));
-			console.log("------");
-			resolve(model);
+			
+			resolve(corsi);
 	  	});
 	});
+
+
+	var people = new Promise(function(resolve, reject) {
+		t.get("/1/lists/58ecc93e3c1d4af7ea4e94dc/cards", { attachments: true }, function(err, people) {
+			if (err) {
+				reject();
+				return;
+			}
+			resolve(people);
+	  	});
+	});
+
+	return Promise.all([corsi, people]).then(function(values) {
+		console.log("CORSI ", values[0])
+		model = {
+			corsi : values[0],
+			people : values[1]
+		}
+	});
 }
+
+
 	
-var model;
-loadModel().then(function(data) {
-	model = data;
-});
+loadModel();
 
 app.get('/:page', function(req, res, next) {  
 	console.log(model);
