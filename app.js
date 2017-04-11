@@ -56,11 +56,33 @@ var loadModel = function() {
 	  	});
 	});
 
-	return Promise.all([corsi, people]).then(function(values) {
-		console.log("CORSI ", values[0])
+	var eventi = new Promise(function(resolve, reject) {
+		t.get("/1/lists/58ecdc431b13b17a879f4e69/cards", { attachments: true }, function(err, eventi) {
+			if (err) {
+				reject();
+				return;
+			}
+			resolve(eventi);
+	  	});
+	});
+
+
+	var progetti = new Promise(function(resolve, reject) {
+		t.get("/1/lists/58ed0b93e601e0f759933d33/cards", { attachments: true }, function(err, progetti) {
+			if (err) {
+				reject();
+				return;
+			}
+			resolve(progetti);
+	  	});
+	});
+
+	return Promise.all([corsi, people, eventi, progetti]).then(function(values) {
 		model = {
 			corsi : values[0],
-			people : values[1]
+			people : values[1],
+			eventi : values[2],
+			progetti : values[3]
 		}
 	});
 }
@@ -69,15 +91,16 @@ var loadModel = function() {
 	
 loadModel();
 
-app.get('/:page', function(req, res, next) {  
-	console.log(model);
+app.get(['/', '/:page'], function(req, res, next) {  
+	if (!req.params.page)
+		req.params.page = "index.html";
 	if (req.params.page.endsWith(".html"))
 		res.render(req.params.page, model);
 	else
 		next();
 });
 
-app.get('/corsi/:idcorso/:nomecorso', function(req, res, next) {
+app.get('/corso/:idcorso/:nomecorso', function(req, res, next) {
 
 	model.corsi.forEach(function(c) {
 		if (req.params.idcorso == c.id)
@@ -85,6 +108,26 @@ app.get('/corsi/:idcorso/:nomecorso', function(req, res, next) {
 	});
 	
 });
+
+app.get('/evento/:idevento/:nomeevento', function(req, res, next) {
+
+	model.eventi.forEach(function(c) {
+		if (req.params.idevento == c.id)
+			res.render("evento.html", c);
+	});
+	
+});
+
+
+app.get('/progetto/:id/:nome', function(req, res, next) {
+
+	model.progetti.forEach(function(c) {
+		if (req.params.id == c.id)
+			res.render("progetto.html", c);
+	});
+	
+});
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 

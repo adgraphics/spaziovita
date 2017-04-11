@@ -28,7 +28,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h4 class="m-0">Eventi</h4>
+          <h4 class="m-0">Progetti</h4>
         </div>
       </div>
     </div>
@@ -40,7 +40,7 @@
         <% for (var key in eventi ) {  %>
 
         <div class="col-md-4">
-          <a href="/eventi/<%=eventi[key].id%>/<%=eventi[key].name%>"><div class="card card-info"> <img class="img-fluid" src="<%=eventi[key].attachments[0].url%>" alt="Card image">
+          <a href="/evento/<%=eventi[key].id%>/<%=eventi[key].name%>"><div class="card card-info"> <img class="img-fluid" src="<%=eventi[key].attachments[0].url%>" alt="Card image">
             <div class="card-block">
               <h6 class="card-title"><%=eventi[key].name%></h6>
             </div>
