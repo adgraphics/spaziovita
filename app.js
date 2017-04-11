@@ -30,12 +30,9 @@ app.engine('html', ejs.renderFile);
 app.set('view engine', 'html');
 
 
-
-
-
 var loadModel = function() {
 	return new Promise(function(resolve, reject) {
-		t.get("/1/lists/58eb869c344a7f4f5cbe61fd/cards", function(err, corsi) {
+		t.get("/1/lists/58eb869c344a7f4f5cbe61fd/cards", { attachments: true }, function(err, corsi) {
 			if (err) {
 				reject();
 				return;
@@ -43,8 +40,10 @@ var loadModel = function() {
 			var model = {
 				corsi : corsi
 			};
-			resolve(model);
 
+			console.log("corsi" , JSON.stringify(corsi));
+			console.log("------");
+			resolve(model);
 	  	});
 	});
 }
@@ -55,10 +54,7 @@ loadModel().then(function(data) {
 });
 
 
-
-
-
-app.get('/:page', function(req, res, next) {  
+app.get('/:page', function(req, res, next) {
 	console.log(model);
 	if (req.params.page.endsWith(".html"))
 		res.render(req.params.page, model);
@@ -66,9 +62,16 @@ app.get('/:page', function(req, res, next) {
 		next();
 });
 
+app.get('/corsi/:idcorso/:nomecorso', function(req, res, next) {
+
+	model.corsi.forEach(function(c) {
+		if (req.params.idcorso == c.id)
+			res.render("corso.html", c);
+	});
+	
+});
 
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 
 // catch 404 and forward to error handler
@@ -87,7 +90,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.send('error', err.message);
 });
 
 module.exports = app;
