@@ -24,7 +24,7 @@
       </div>
     </div>
   </nav>
-  <div class="py-3 text-white bg-primary">
+  <div class="py-3 bg-primary text-white">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
@@ -36,15 +36,18 @@
   <div class="py-5">
     <div class="container">
       <div class="row text-center">
+
+        <% for (var key in eventi ) {  %>
+
         <div class="col-md-4">
-          <div class="card card-primary"> <img class="img-fluid" src="NesbitTeaching.jpg" alt="Card image">
+          <a href="/eventi/<%=eventi[key].id%>/<%=eventi[key].name%>"><div class="card card-info"> <img class="img-fluid" src="<%=eventi[key].attachments[0].url%>" alt="Card image">
             <div class="card-block">
-              <h4 class="card-title">Card title</h4>
-              <h6 class="card-subtitle text-muted">Support card subtitle</h6>
-              <p class="card-text p-y-1">Some quick example text to build on the card title .</p>
+              <h6 class="card-title"><%=eventi[key].name%></h6>
             </div>
           </div>
-        </div>
+        </div></a>
+
+        <% }  %>
       </div>
     </div>
   </div>

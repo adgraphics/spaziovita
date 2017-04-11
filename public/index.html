@@ -196,26 +196,16 @@
           <h2 class="text-left">Staff</h2>
         </div>
       </div>
+
+
       <div class="row text-center">
-        <div class="col-md-2"> <img class="center-block img-fluid d-block" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg">
-          <h4 class="">Heading</h4>
-        </div>
-        <div class="col-md-2"> <img class="center-block img-fluid d-block" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg">
-          <h4 class="">Heading</h4>
-        </div>
-        <div class="col-md-2"> <img class="center-block img-fluid d-block" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg">
-          <h4 class="">Heading</h4>
-        </div>
-        <div class="col-md-2"> <img class="center-block img-fluid d-block" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg">
-          <h4 class="">Heading</h4>
-        </div>
-        <div class="col-md-2"> <img class="center-block img-fluid d-block" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg">
-          <h4 class="">Heading</h4>
-        </div>
-        <div class="col-md-2"> <img class="center-block img-fluid d-block" src="https://pingendo.com/assets/photos/wireframe/photo-1.jpg">
-          <h4 class="">Heading</h4>
-        </div>
-      </div>
+        <% for (var key in people ) {  %>
+          <div class="col-md-2 my-5"> <img class="center-block img-fluid d-block" src="<%=people[key].attachments[0].url%>">
+            <h4 class="my-3"><%=people[key].name%></h4>
+          </div>
+        <% } %>
+      </div>        
+
     </div>
   </div>
   <div class="py-5 bg-primary">
