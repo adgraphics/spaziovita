@@ -35,20 +35,16 @@
   </div>
   <div class="py-5">
     <div class="container">
-      <div class="row text-center">
-
-        <% for (var key in progetti ) {  %>
-
+      <div class="row text-center"> &lt;% for (var key in progetti ) { %&gt;
         <div class="col-md-4">
-          <a href="/progetto/<%=progetti[key].id%>/<%=progetti[key].name%>"><div class="card card-success"> <img class="img-fluid" src="<%=progetti[key].attachments[0].url%>" alt="Card image">
-            <div class="card-block">
-              <h6 class="card-title text-success"><%=progetti[key].name%></h6>
+          <a href="/progetto/&lt;%=progetti[key].id%&gt;/&lt;%=progetti[key].name%&gt;">
+            <div class="card card-success"> <img class="img-fluid" src="&lt;%=progetti[key].attachments[0].url%&gt;" alt="Card image">
+              <div class="card-block">
+                <h6 class="card-title text-success">&lt;%=progetti[key].name%&gt;</h6>
+              </div>
             </div>
-          </div>
-        </div></a>
-
-        <% }  %>
-      </div>
+          </a>
+        </div> &lt;% } %&gt; </div>
     </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
