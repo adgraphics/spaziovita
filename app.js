@@ -3,8 +3,6 @@
 *********  TRELLO BOARD CONTENUTI 
 *********  https://trello.com/b/iV7i6Ruc/sito
 *********/
-
-
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -14,8 +12,6 @@ var bodyParser = require('body-parser');
 var request = require('request');
 var Trello = require("node-trello");
 var ejs = require('ejs');
-
-
 
 if(!process.env.NODE_ENV) // DEV
 	process.env = require('./env.json')['development'];
@@ -30,8 +26,11 @@ app.engine('html', ejs.renderFile);
 app.set('view engine', 'html');
 
 
-
-
+app.get('/update', function(req,res){
+	loadModel().then(function(data) {
+		res.send("BENE, HAI AGGIORNATO spaziovitaniguarda.it");
+	});
+});
 
 var loadModel = function() {
 	return new Promise(function(resolve, reject) {
@@ -54,10 +53,6 @@ loadModel().then(function(data) {
 	model = data;
 });
 
-
-
-
-
 app.get('/:page', function(req, res, next) {  
 	console.log(model);
 	if (req.params.page.endsWith(".html"))
@@ -66,9 +61,7 @@ app.get('/:page', function(req, res, next) {
 		next();
 });
 
-
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 
 // catch 404 and forward to error handler
@@ -92,10 +85,7 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
-
 var port = process.env.PORT || 8888;
 app.listen(port, null, function (err) {
   console.log('Gatekeeper, at your service: http://localhost:' + port);
 });
-
-
