@@ -199,8 +199,6 @@ h2::after  {
   border: 0px;
 }
 
-#primopiano {
-}
 
 .card-primary .card-block:last-child::after {
    content: ' ';
@@ -210,4 +208,10 @@ h2::after  {
   margin:auto;
   margin-top:20px;
 	border-bottom : 2px solid $brand-primary;
+}
+
+#primopiano {
+  a {
+    color:white;
+  }
 }
