@@ -77,6 +77,16 @@ var loadModel = function() {
 	  	});
 	});
 
+	// var cinema = new Promise(function(resolve, reject) {
+	// 	t.get("/1/lists/58ed0b93e601e0f759933d33/cards", { attachments: true }, function(err, cinema) {
+	// 		if (err) {
+	// 			reject();
+	// 			return;
+	// 		}
+	// 		resolve(cinema);
+	//   	});
+	// });
+
 	return Promise.all([corsi, people, eventi, progetti]).then(function(values) {
 		model = {
 			corsi : values[0],
